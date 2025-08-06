@@ -4,11 +4,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  COVERAGE_WARNING_THRESHOLD: 99
-  COVERAGE_THRESHOLD: 98
-  MUTATION_THRESHOLD: 98
-
 jobs:
   build:
 
@@ -25,13 +20,21 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore -warnaserror /p:RunAnalyzers=true
-    - name: Code style check
+      run: dotnet build --no-restore -warnaserror
+    - name: Code style check by dotnet format
       run: dotnet format --verify-no-changes
+    - name: Install csharpier
+      run: dotnet tool install -g csharpier
+    - name: Code style check by csharpier
+      run: csharpier check .
     - name: Test
       run: dotnet test --no-build --verbosity normal --logger trx --collect:"XPlat Code Coverage"
+    - name: Install dotnet-stryker globally
+      run: dotnet tool install -g dotnet-stryker
+    - name: Run mutation test
+      run: dotnet stryker --mutation-level Complete --break-at 99
     - name: Combine Coverage Reports
-      uses: danielpalme/ReportGenerator-GitHub-Action@5.4.11
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.4.10
       with:
         reports: "**/*.cobertura.xml"
         targetdir: "${{ github.workspace }}"
@@ -51,14 +54,10 @@ jobs:
         hide_complexity: false
         indicators: true
         output: both
-        thresholds: "${{ env.COVERAGE_WARNING_THRESHOLD }} ${{ env.COVERAGE_THRESHOLD }}"
+        thresholds: "98 98"
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
+      if: github.event_name == 'pull_request'
       with:
         recreate: true
         path: code-coverage-results.md
-    - name: Install dotnet-stryker globally
-      run: dotnet tool install -g dotnet-stryker
-    - name: Run mutation test
-      run: dotnet stryker --mutation-level Complete --break-at ${{ env.MUTATION_THRESHOLD }}
