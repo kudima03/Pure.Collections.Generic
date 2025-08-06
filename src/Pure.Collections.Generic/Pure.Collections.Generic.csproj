@@ -4,4 +4,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <PropertyGroup>
+    <PackageId>Pure.Collections.Generic</PackageId>
+    <RootNamespace>Pure.Collections.Generic</RootNamespace>
+    <AssemblyName>Pure.Collections.Generic</AssemblyName>
+    <Authors>Dmitry Kurochkin</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/kudima03/Pure.Collections.Generic</PackageProjectUrl>
+  </PropertyGroup>
 </Project>
