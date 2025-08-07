@@ -83,7 +83,7 @@ public sealed record DictionaryTests
             new RandomIntCollection(new UShort(10))
         );
 
-        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<
+        _ = new Dictionary<
             INumber<int>,
             INumber<int>,
             INumber<int>
@@ -105,7 +105,8 @@ public sealed record DictionaryTests
             INumber<int>
         >(source, x => x, _ => new MaxInt(), x => new DeterminedHash(x));
 
-        foreach (INumber<int> _ in dictionary.Keys) { }
+        foreach (INumber<int> _ in dictionary.Keys)
+        { }
 
         Assert.True(source.Enumerated);
     }
@@ -136,7 +137,7 @@ public sealed record DictionaryTests
     public void ThrowsExceptionOnGetHashCode()
     {
         _ = Assert.Throws<NotSupportedException>(() =>
-            new Set<INumber<int>>([], x => new DeterminedHash(x)).GetHashCode()
+            new Dictionary<INumber<int>, INumber<int>, INumber<int>>([], x => x, x => x, x => new DeterminedHash(x)).GetHashCode()
         );
     }
 
@@ -144,7 +145,7 @@ public sealed record DictionaryTests
     public void ThrowsExceptionOnToString()
     {
         _ = Assert.Throws<NotSupportedException>(() =>
-            new Set<INumber<int>>([], x => new DeterminedHash(x)).ToString()
+            new Dictionary<INumber<int>, INumber<int>, INumber<int>>([], x => x, x => x, x => new DeterminedHash(x)).ToString()
         );
     }
 }

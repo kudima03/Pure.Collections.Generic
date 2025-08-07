@@ -64,4 +64,14 @@ public sealed record Dictionary<TSource, TKey, TValue> : IReadOnlyDictionary<TKe
     {
         return GetEnumerator();
     }
+
+    public override int GetHashCode()
+    {
+        throw new NotSupportedException();
+    }
+
+    public override string ToString()
+    {
+        throw new NotSupportedException();
+    }
 }
