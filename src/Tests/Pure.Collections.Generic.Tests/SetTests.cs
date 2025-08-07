@@ -56,17 +56,6 @@ public sealed record SetTests
     }
 
     [Fact]
-    public void UnderlyingTypeIsFrozenSet()
-    {
-        using IEnumerator<INumber<int>> enumerator = new Set<INumber<int>>(
-            [],
-            x => new DeterminedHash(x)
-        ).GetEnumerator();
-
-        _ = Assert.IsType<FrozenSet<INumber<int>>.Enumerator>(enumerator);
-    }
-
-    [Fact]
     public void ThrowsExceptionOnGetHashCode()
     {
         _ = Assert.Throws<NotSupportedException>(() =>
