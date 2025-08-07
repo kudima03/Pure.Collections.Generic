@@ -6,22 +6,19 @@ namespace Pure.Collections.Generic;
 
 public sealed record Set<T> : IEnumerable<T>
 {
-    private readonly IEnumerable<T> _source;
-
-    private readonly IEqualityComparer<T> _equalityComparer;
+    private readonly IReadOnlySet<T> _set;
 
     public Set(IEnumerable<T> source, Func<T, IDeterminedHash> determinedHashFactory)
         : this(source, new EqualityComparerByDeterminedHash<T>(determinedHashFactory)) { }
 
     private Set(IEnumerable<T> source, IEqualityComparer<T> equalityComparer)
     {
-        _source = source;
-        _equalityComparer = equalityComparer;
+        _set = source.ToFrozenSet(equalityComparer);
     }
 
     public IEnumerator<T> GetEnumerator()
     {
-        return _source.ToFrozenSet(_equalityComparer).GetEnumerator();
+        return _set.GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
