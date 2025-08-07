@@ -1,4 +1,3 @@
-using System.Collections.Frozen;
 using Pure.Collections.Generic.Tests.Fakes;
 using Pure.HashCodes;
 using Pure.Primitives.Abstractions.Number;
@@ -53,27 +52,33 @@ public sealed record SetTests
             new Int(10),
             new Int(10),
         ];
-        Assert.Equal(
-            1,
-            new Set<INumber<int>>(numbers, x => new DeterminedHash(x)).Count()
-        );
+        Assert.Single(new Set<INumber<int>>(numbers, x => new DeterminedHash(x)));
     }
 
     [Fact]
     public void NotEnumerateSourceBeforeCall()
     {
-        EnumerableWithEnumerationMarker<INumber<int>> source = new(new RandomIntCollection(new UShort(10)));
-        IEnumerable<INumber<int>> set = new Set<INumber<int>>(source, x => new DeterminedHash(x));
+        EnumerableWithEnumerationMarker<INumber<int>> source = new(
+            new RandomIntCollection(new UShort(10))
+        );
+        IEnumerable<INumber<int>> set = new Set<INumber<int>>(
+            source,
+            x => new DeterminedHash(x)
+        );
         Assert.False(source.Enumerated);
     }
 
     [Fact]
     public void EnumerateSourceAfterCall()
     {
-        EnumerableWithEnumerationMarker<INumber<int>> source = new(new RandomIntCollection(new UShort(10)));
-        IEnumerable<INumber<int>> set = new Set<INumber<int>>(source, x => new DeterminedHash(x));
-        foreach (INumber<int> i in set)
-        { }
+        EnumerableWithEnumerationMarker<INumber<int>> source = new(
+            new RandomIntCollection(new UShort(10))
+        );
+        IEnumerable<INumber<int>> set = new Set<INumber<int>>(
+            source,
+            x => new DeterminedHash(x)
+        );
+        foreach (INumber<int> i in set) { }
         Assert.True(source.Enumerated);
     }
 

@@ -27,7 +27,8 @@ public sealed record ArrayTests
     public void NotEnumerateSourceBeforeCall()
     {
         EnumerableWithEnumerationMarker<int> source = new([1, 2, 3, 4, 5]);
-        IEnumerable<int> array = new Array<int>(source);
+
+        _ = new Array<int>(source);
         Assert.False(source.Enumerated);
     }
 

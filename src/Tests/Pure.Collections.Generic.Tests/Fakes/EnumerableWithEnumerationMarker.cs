@@ -2,14 +2,10 @@ using System.Collections;
 
 namespace Pure.Collections.Generic.Tests.Fakes;
 
-internal class EnumerableWithEnumerationMarker<T> : IEnumerable<T>
+internal sealed class EnumerableWithEnumerationMarker<T>(IEnumerable<T> source)
+    : IEnumerable<T>
 {
-    private readonly IEnumerable<T> _source;
-
-    public EnumerableWithEnumerationMarker(IEnumerable<T> source)
-    {
-        _source = source;
-    }
+    private readonly IEnumerable<T> _source = source;
 
     public bool Enumerated { get; private set; }
 
