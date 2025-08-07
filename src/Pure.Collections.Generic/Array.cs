@@ -4,16 +4,16 @@ namespace Pure.Collections.Generic;
 
 public sealed record Array<T> : IEnumerable<T>
 {
-    private readonly IEnumerable<T> _source;
+    private readonly Lazy<T[]> _source;
 
     public Array(IEnumerable<T> source)
     {
-        _source = source;
+        _source = new Lazy<T[]>(source.ToArray);
     }
 
     public IEnumerator<T> GetEnumerator()
     {
-        return _source.ToArray().AsEnumerable().GetEnumerator();
+        return _source.Value.AsEnumerable().GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
