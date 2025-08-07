@@ -61,10 +61,7 @@ public sealed record SetTests
         EnumerableWithEnumerationMarker<INumber<int>> source = new(
             new RandomIntCollection(new UShort(10))
         );
-         _ = new Set<INumber<int>>(
-            source,
-            x => new DeterminedHash(x)
-        );
+        _ = new Set<INumber<int>>(source, x => new DeterminedHash(x));
         Assert.False(source.Enumerated);
     }
 
