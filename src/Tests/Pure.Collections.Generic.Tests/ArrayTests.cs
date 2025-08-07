@@ -36,7 +36,7 @@ public sealed record ArrayTests
     public void EnumerateSourceAfterCall()
     {
         EnumerableWithEnumerationMarker<int> source = new([1, 2, 3, 4, 5]);
-        foreach (int i in new Array<int>(source)) { }
+        foreach (int _ in new Array<int>(source)) { }
         Assert.True(source.Enumerated);
     }
 

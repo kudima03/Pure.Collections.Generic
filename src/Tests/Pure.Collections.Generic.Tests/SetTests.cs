@@ -52,7 +52,7 @@ public sealed record SetTests
             new Int(10),
             new Int(10),
         ];
-        Assert.Single(new Set<INumber<int>>(numbers, x => new DeterminedHash(x)));
+        _ = Assert.Single(new Set<INumber<int>>(numbers, x => new DeterminedHash(x)));
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public sealed record SetTests
         EnumerableWithEnumerationMarker<INumber<int>> source = new(
             new RandomIntCollection(new UShort(10))
         );
-        IEnumerable<INumber<int>> set = new Set<INumber<int>>(
+         _ = new Set<INumber<int>>(
             source,
             x => new DeterminedHash(x)
         );
@@ -78,7 +78,7 @@ public sealed record SetTests
             source,
             x => new DeterminedHash(x)
         );
-        foreach (INumber<int> i in set) { }
+        foreach (INumber<int> _ in set) { }
         Assert.True(source.Enumerated);
     }
 
@@ -94,7 +94,10 @@ public sealed record SetTests
             new Int(13),
         ];
 
-        Assert.Contains(new Int(10), numbers);
+        Assert.Contains(
+            new Int(10),
+            new Set<INumber<int>>(numbers, x => new DeterminedHash(x))
+        );
     }
 
     [Fact]
