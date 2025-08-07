@@ -146,7 +146,7 @@ public sealed record DictionaryTests
             x => x,
             x => new DeterminedHash(x)
         );
-        
+
         bool result = dictionary.TryGetValue(source.First(), out INumber<int>? value);
 
         Assert.True(result);
