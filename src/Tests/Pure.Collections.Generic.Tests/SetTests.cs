@@ -1,3 +1,4 @@
+using System.Collections;
 using Pure.Collections.Generic.Tests.Fakes;
 using Pure.HashCodes;
 using Pure.Primitives.Abstractions.Number;
@@ -53,6 +54,22 @@ public sealed record SetTests
             new Int(10),
         ];
         _ = Assert.Single(new Set<INumber<int>>(numbers, x => new DeterminedHash(x)));
+    }
+
+    [Fact]
+    public void EnumeratesAsUntyped()
+    {
+        IEnumerable<INumber<int>> source = new Array<INumber<int>>(
+            [new Int(10), new Int(12), new Int(13), new Int(14)]
+        );
+        IEnumerable set = new Set<INumber<int>>(source, x => new DeterminedHash(x));
+        ICollection<INumber<int>> list = [];
+        foreach (object? item in set)
+        {
+            list.Add((INumber<int>)item);
+        }
+
+        Assert.Equal(source, list);
     }
 
     [Fact]

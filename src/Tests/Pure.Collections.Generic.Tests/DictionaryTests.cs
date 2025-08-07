@@ -1,3 +1,4 @@
+using System.Collections;
 using Pure.Collections.Generic.Tests.Fakes;
 using Pure.HashCodes;
 using Pure.Primitives.Abstractions.Number;
@@ -74,6 +75,126 @@ public sealed record DictionaryTests
                 x => new DeterminedHash(x)
             ).Keys
         );
+    }
+
+    [Fact]
+    public void EnumeratesAsUntyped()
+    {
+        IReadOnlyCollection<INumber<int>> source =
+        [
+            new Int(1),
+            new Int(2),
+            new Int(3),
+            new Int(4),
+            new Int(5),
+        ];
+
+        IEnumerable dictionary = new Dictionary<INumber<int>, INumber<int>, INumber<int>>(
+            source,
+            x => x,
+            x => x,
+            x => new DeterminedHash(x)
+        );
+
+        ICollection<KeyValuePair<INumber<int>, INumber<int>>> list = [];
+
+        foreach (object? item in dictionary)
+        {
+            list.Add((KeyValuePair<INumber<int>, INumber<int>>)item);
+        }
+
+        Assert.Equal(source.Count, list.Count);
+    }
+
+    [Fact]
+    public void EnumeratesAsTyped()
+    {
+        IReadOnlyCollection<INumber<int>> source =
+        [
+            new Int(1),
+            new Int(2),
+            new Int(3),
+            new Int(4),
+            new Int(5),
+        ];
+
+        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<INumber<int>, INumber<int>, INumber<int>>(
+            source,
+            x => x,
+            x => x,
+            x => new DeterminedHash(x)
+        );
+
+        Assert.Equal(source.Count, dictionary.Count);
+    }
+
+    [Fact]
+    public void TryGetValueReturnsCorrectValue()
+    {
+        IReadOnlyCollection<INumber<int>> source =
+        [
+            new Int(1),
+            new Int(2),
+            new Int(3),
+            new Int(4),
+            new Int(5),
+        ];
+
+        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<INumber<int>, INumber<int>, INumber<int>>(
+            source,
+            x => x,
+            x => x,
+            x => new DeterminedHash(x)
+        );
+        
+        bool result = dictionary.TryGetValue(source.First(), out INumber<int>? value);
+
+        Assert.True(result);
+        Assert.Equal(source.First(), value);
+    }
+
+    [Fact]
+    public void IndexOperatorReturnCorrectValue()
+    {
+        IReadOnlyCollection<INumber<int>> source =
+        [
+            new Int(1),
+            new Int(2),
+            new Int(3),
+            new Int(4),
+            new Int(5),
+        ];
+
+        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<INumber<int>, INumber<int>, INumber<int>>(
+            source,
+            x => x,
+            x => x,
+            x => new DeterminedHash(x)
+        );
+
+        Assert.Equal(source.Last(), dictionary[source.Last()]);
+    }
+
+    [Fact]
+    public void ContainsKeyReturnCorrectValue()
+    {
+        IReadOnlyCollection<INumber<int>> source =
+        [
+            new Int(1),
+            new Int(2),
+            new Int(3),
+            new Int(4),
+            new Int(5),
+        ];
+
+        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<INumber<int>, INumber<int>, INumber<int>>(
+            source,
+            x => x,
+            x => x,
+            x => new DeterminedHash(x)
+        );
+
+        Assert.True(dictionary.ContainsKey(source.Last()));
     }
 
     [Fact]

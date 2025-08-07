@@ -1,3 +1,4 @@
+using System.Collections;
 using Pure.Collections.Generic.Tests.Fakes;
 
 namespace Pure.Collections.Generic.Tests;
@@ -13,6 +14,19 @@ public sealed record ArrayTests
             .. Enumerable.Range(1, 100).Select(_ => random.Next()),
         ];
         Assert.Equal(randomNumbers, new Array<int>(randomNumbers));
+    }
+
+    [Fact]
+    public void EnumeratesAsUntyped()
+    {
+        IEnumerable<int> source = [1, 2, 3, 4, 5, 6];
+        IEnumerable array = new Array<int>(source);
+        ICollection<int> list = [];
+        foreach (object? item in array)
+        {
+            list.Add((int)item);
+        }
+        Assert.Equal(source, list);
     }
 
     [Fact]
