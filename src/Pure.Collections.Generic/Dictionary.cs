@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Frozen;
 using System.Diagnostics.CodeAnalysis;
 using Pure.HashCodes;
 
@@ -7,13 +8,7 @@ namespace Pure.Collections.Generic;
 public sealed record Dictionary<TSource, TKey, TValue> : IReadOnlyDictionary<TKey, TValue>
     where TKey : notnull
 {
-    private readonly IEnumerable<TSource> _source;
-
-    private readonly Func<TSource, TKey> _keySelector;
-
-    private readonly Func<TSource, TValue> _valueSelector;
-
-    private readonly IEqualityComparer<TKey> _comparer;
+    private readonly Lazy<IReadOnlyDictionary<TKey, TValue>> _lazyDictionary;
 
     public Dictionary(
         IEnumerable<TSource> source,
@@ -26,8 +21,7 @@ public sealed record Dictionary<TSource, TKey, TValue> : IReadOnlyDictionary<TKe
             keySelector,
             valueSelector,
             new EqualityComparerByDeterminedHash<TKey>(determinedHashFactory)
-        )
-    { }
+        ) { }
 
     private Dictionary(
         IEnumerable<TSource> source,
@@ -36,43 +30,34 @@ public sealed record Dictionary<TSource, TKey, TValue> : IReadOnlyDictionary<TKe
         IEqualityComparer<TKey> comparer
     )
     {
-        _source = source;
-        _keySelector = keySelector;
-        _valueSelector = valueSelector;
-        _comparer = comparer;
+        _lazyDictionary = new Lazy<IReadOnlyDictionary<TKey, TValue>>(() =>
+            source.ToFrozenDictionary(keySelector, valueSelector, comparer)
+        );
     }
 
-    public int Count =>
-        _source.ToDictionary(_keySelector, _valueSelector, _comparer).Count;
+    private IReadOnlyDictionary<TKey, TValue> Inner => _lazyDictionary.Value;
 
-    public IEnumerable<TKey> Keys =>
-        _source.ToDictionary(_keySelector, _valueSelector, _comparer).Keys;
+    public int Count => Inner.Count;
 
-    public IEnumerable<TValue> Values =>
-        _source.ToDictionary(_keySelector, _valueSelector, _comparer).Values;
+    public IEnumerable<TKey> Keys => Inner.Keys;
+
+    public IEnumerable<TValue> Values => Inner.Values;
 
     public bool ContainsKey(TKey key)
     {
-        return _source
-            .ToDictionary(_keySelector, _valueSelector, _comparer)
-            .ContainsKey(key);
+        return Inner.ContainsKey(key);
     }
 
     public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
     {
-        return _source
-            .ToDictionary(_keySelector, _valueSelector, _comparer)
-            .TryGetValue(key, out value);
+        return Inner.TryGetValue(key, out value);
     }
 
-    public TValue this[TKey key] =>
-        _source.ToDictionary(_keySelector, _valueSelector, _comparer)[key];
+    public TValue this[TKey key] => Inner[key];
 
     public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
     {
-        return _source
-            .ToDictionary(_keySelector, _valueSelector, _comparer)
-            .GetEnumerator();
+        return Inner.GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
