@@ -1,3 +1,5 @@
+using Pure.Collections.Generic.Tests.Fakes;
+
 namespace Pure.Collections.Generic.Tests;
 
 public sealed record ArrayTests
@@ -19,6 +21,22 @@ public sealed record ArrayTests
         using IEnumerator<int> enumerator = new Array<int>([]).GetEnumerator();
 
         Assert.Equal("SZGenericArrayEnumerator`1", enumerator.GetType().Name);
+    }
+
+    [Fact]
+    public void NotEnumerateSourceBeforeCall()
+    {
+        EnumerableWithEnumerationMarker<int> source = new([1, 2, 3, 4, 5]);
+        IEnumerable<int> array = new Array<int>(source);
+        Assert.False(source.Enumerated);
+    }
+
+    [Fact]
+    public void EnumerateSourceAfterCall()
+    {
+        EnumerableWithEnumerationMarker<int> source = new([1, 2, 3, 4, 5]);
+        foreach (int i in new Array<int>(source)) { }
+        Assert.True(source.Enumerated);
     }
 
     [Fact]
