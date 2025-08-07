@@ -15,4 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Pure.HashCodes" Version="0.4.0" />
   </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Pure.Collections.Generic.Tests" />
+  </ItemGroup>
 </Project>
