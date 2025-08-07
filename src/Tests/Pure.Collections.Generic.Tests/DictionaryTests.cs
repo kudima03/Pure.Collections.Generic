@@ -106,7 +106,8 @@ public sealed record DictionaryTests
             INumber<int>
         >(source, x => x, _ => new MaxInt(), x => new DeterminedHash(x));
 
-        foreach (INumber<int> _ in dictionary.Keys) { }
+        foreach (INumber<int> _ in dictionary.Keys)
+        { }
 
         Assert.True(source.Enumerated);
     }

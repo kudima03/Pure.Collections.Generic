@@ -21,7 +21,8 @@ public sealed record Dictionary<TSource, TKey, TValue> : IReadOnlyDictionary<TKe
             keySelector,
             valueSelector,
             new EqualityComparerByDeterminedHash<TKey>(determinedHashFactory)
-        ) { }
+        )
+    { }
 
     private Dictionary(
         IEnumerable<TSource> source,

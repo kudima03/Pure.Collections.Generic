@@ -75,7 +75,8 @@ public sealed record SetTests
             source,
             x => new DeterminedHash(x)
         );
-        foreach (INumber<int> _ in set) { }
+        foreach (INumber<int> _ in set)
+        { }
         Assert.True(source.Enumerated);
     }
 
