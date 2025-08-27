@@ -2,6 +2,7 @@ using System.Collections;
 using Pure.Collections.Generic.Tests.Fakes;
 using Pure.HashCodes;
 using Pure.Primitives.Abstractions.Number;
+using Pure.Primitives.Materialized.Number;
 using Pure.Primitives.Number;
 using Pure.Primitives.Random.Number;
 
@@ -110,8 +111,10 @@ public sealed record SetTests
         ];
 
         Assert.Contains(
-            new Int(10),
-            new Set<INumber<int>>(numbers, x => new DeterminedHash(x))
+            10,
+            new Set<INumber<int>>(numbers, x => new DeterminedHash(x)).Select(x =>
+                new MaterializedNumber<int>(x).Value
+            )
         );
     }
 
