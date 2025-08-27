@@ -4,6 +4,11 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  COVERAGE_WARNING_THRESHOLD: 99
+  COVERAGE_THRESHOLD: 98
+  MUTATION_THRESHOLD: 98
+
 jobs:
   build:
 
@@ -29,10 +34,6 @@ jobs:
 #      run: csharpier check .
     - name: Test
       run: dotnet test --no-build --verbosity normal --logger trx --collect:"XPlat Code Coverage"
-    - name: Install dotnet-stryker globally
-      run: dotnet tool install -g dotnet-stryker
-    - name: Run mutation test
-      run: dotnet stryker --mutation-level Complete --break-at 99
     - name: Combine Coverage Reports
       uses: danielpalme/ReportGenerator-GitHub-Action@5.4.12
       with:
@@ -54,10 +55,14 @@ jobs:
         hide_complexity: false
         indicators: true
         output: both
-        thresholds: "98 98"
+        thresholds: "${{ env.COVERAGE_THRESHOLD }} ${{ env.COVERAGE_WARNING_THRESHOLD }}"
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
+      if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
       with:
         recreate: true
         path: code-coverage-results.md
+    - name: Install dotnet-stryker globally
+      run: dotnet tool install -g dotnet-stryker
+    - name: Run mutation test
+      run: dotnet stryker --mutation-level Complete --break-at ${{ env.MUTATION_THRESHOLD }}
