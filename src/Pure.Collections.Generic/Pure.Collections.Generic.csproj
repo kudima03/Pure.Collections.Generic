@@ -13,7 +13,7 @@
     <PackageProjectUrl>https://github.com/kudima03/Pure.Collections.Generic</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Pure.HashCodes" Version="0.4.0" />
+    <PackageReference Include="Pure.HashCodes" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Pure.Collections.Generic.Tests" />
