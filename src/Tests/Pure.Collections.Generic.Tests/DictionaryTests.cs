@@ -2,6 +2,7 @@ using System.Collections;
 using Pure.Collections.Generic.Tests.Fakes;
 using Pure.HashCodes;
 using Pure.Primitives.Abstractions.Number;
+using Pure.Primitives.Materialized.Number;
 using Pure.Primitives.Number;
 using Pure.Primitives.Random.Number;
 
@@ -118,12 +119,11 @@ public sealed record DictionaryTests
             new Int(5),
         ];
 
-        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<INumber<int>, INumber<int>, INumber<int>>(
-            source,
-            x => x,
-            x => x,
-            x => new DeterminedHash(x)
-        );
+        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<
+            INumber<int>,
+            INumber<int>,
+            INumber<int>
+        >(source, x => x, x => x, x => new DeterminedHash(x));
 
         Assert.Equal(source.Count, dictionary.Count);
     }
@@ -140,12 +140,11 @@ public sealed record DictionaryTests
             new Int(5),
         ];
 
-        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<INumber<int>, INumber<int>, INumber<int>>(
-            source,
-            x => x,
-            x => x,
-            x => new DeterminedHash(x)
-        );
+        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<
+            INumber<int>,
+            INumber<int>,
+            INumber<int>
+        >(source, x => x, x => x, x => new DeterminedHash(x));
 
         bool result = dictionary.TryGetValue(source.First(), out INumber<int>? value);
 
@@ -165,12 +164,11 @@ public sealed record DictionaryTests
             new Int(5),
         ];
 
-        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<INumber<int>, INumber<int>, INumber<int>>(
-            source,
-            x => x,
-            x => x,
-            x => new DeterminedHash(x)
-        );
+        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<
+            INumber<int>,
+            INumber<int>,
+            INumber<int>
+        >(source, x => x, x => x, x => new DeterminedHash(x));
 
         Assert.Equal(source.Last(), dictionary[source.Last()]);
     }
@@ -187,12 +185,11 @@ public sealed record DictionaryTests
             new Int(5),
         ];
 
-        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<INumber<int>, INumber<int>, INumber<int>>(
-            source,
-            x => x,
-            x => x,
-            x => new DeterminedHash(x)
-        );
+        IReadOnlyDictionary<INumber<int>, INumber<int>> dictionary = new Dictionary<
+            INumber<int>,
+            INumber<int>,
+            INumber<int>
+        >(source, x => x, x => x, x => new DeterminedHash(x));
 
         Assert.True(dictionary.ContainsKey(source.Last()));
     }
@@ -245,13 +242,13 @@ public sealed record DictionaryTests
         ];
 
         Assert.Contains(
-            new Int(10),
+            10,
             new Dictionary<INumber<int>, INumber<int>, INumber<int>>(
                 numbers,
                 x => x,
                 x => x,
                 x => new DeterminedHash(x)
-            ).Keys
+            ).Keys.Select(x => new MaterializedNumber<int>(x).Value)
         );
     }
 
