@@ -11,7 +11,7 @@
     <PackageReference Include="Pure.Primitives.Materialized" Version="0.1.0" />
     <PackageReference Include="Pure.Primitives.Random" Version="0.5.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Pure.Collections.Generic\Pure.Collections.Generic.csproj" />
