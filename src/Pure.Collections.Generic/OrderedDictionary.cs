@@ -39,10 +39,15 @@ public sealed record OrderedDictionary<TSource, TKey, TValue>
         );
 
         _lazyCollection = new Lazy<IEnumerable<KeyValuePair<TKey, TValue>>>(() =>
-            source.Select(x => new KeyValuePair<TKey, TValue>(
-                keySelector(x),
-                valueSelector(x)
-            ))
+
+            [
+                .. source
+                    .Select(x => new KeyValuePair<TKey, TValue>(
+                        keySelector(x),
+                        valueSelector(x)
+                    ))
+                    .DistinctBy(x => x.Key, comparer),
+            ]
         );
     }
 
