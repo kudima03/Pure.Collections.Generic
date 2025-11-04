@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Frozen;
-using Pure.HashCodes;
+using Pure.HashCodes.Abstractions;
 
 namespace Pure.Collections.Generic;
 
