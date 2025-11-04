@@ -14,10 +14,11 @@
     <PackageProjectUrl>https://github.com/kudima03/Pure.Collections.Generic</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Pure.HashCodes" Version="1.0.0" />
+    <PackageReference Include="Pure.HashCodes" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="9.0.9" />
+    <PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="9.0.10" />
+    <PackageReference Include="Pure.HashCodes.Abstractions" Version="0.1.0" />
     <InternalsVisibleTo Include="Pure.Collections.Generic.Tests" />
   </ItemGroup>
 </Project>
