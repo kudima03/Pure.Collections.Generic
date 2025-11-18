@@ -34,6 +34,7 @@ public sealed record OrderedDictionary<TSource, TKey, TValue>
         IEqualityComparer<TKey> comparer
     )
     {
+        source = [.. source];
         _lazyDictionary = new Lazy<IReadOnlyDictionary<TKey, TValue>>(() =>
             source.ToFrozenDictionary(keySelector, valueSelector, comparer)
         );
