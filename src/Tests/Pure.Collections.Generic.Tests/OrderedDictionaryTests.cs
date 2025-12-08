@@ -225,9 +225,7 @@ public sealed record OrderedDictionaryTests
         Assert.True(dictionary.ContainsKey(source.Last()));
     }
 
-#pragma warning disable xUnit1004 // Test methods should not be skipped
-    [Fact(Skip = "Skipped enumeration check")]
-#pragma warning restore xUnit1004 // Test methods should not be skipped
+    [Fact]
     public void NotEnumerateSourceBeforeCall()
     {
         EnumerableWithEnumerationMarker<INumber<int>> source = new(
