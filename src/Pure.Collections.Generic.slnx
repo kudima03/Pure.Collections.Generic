@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/Pure.Collections.Generic.Tests/Pure.Collections.Generic.Tests.csproj" />
+  </Folder>
+  <Project Path="Pure.Collections.Generic/Pure.Collections.Generic.csproj" />
+</Solution>
