@@ -14,10 +14,14 @@
     <AssemblyName>Pure.Collections.Generic</AssemblyName>
     <Authors>Dmitry Kurochkin</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/kudima03/Pure.Collections.Generic</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Pure.HashCodes.Abstractions" Version="0.2.0" />
     <InternalsVisibleTo Include="Pure.Collections.Generic.Tests" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 </Project>
