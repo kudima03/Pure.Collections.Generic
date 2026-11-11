@@ -6,6 +6,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ---
 
+## [0.1.0-preview.3.1.0] — 2026-11-11
+
+### Added
+
+- .NET 11 support: the package now also targets `net11.0`.
+
+### Changed
+
+- Updated `Pure.HashCodes.Abstractions` to `1.0.0`, the .NET 11 release.
+
+---
+
 ## [0.1.0-preview.3.0.0] — 2025-12-08
 
 ### Added
