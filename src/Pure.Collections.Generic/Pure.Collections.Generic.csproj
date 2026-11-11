@@ -18,7 +18,7 @@
     <PackageProjectUrl>https://github.com/kudima03/Pure.Collections.Generic</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Pure.HashCodes.Abstractions" Version="0.2.0" />
+    <PackageReference Include="Pure.HashCodes.Abstractions" Version="1.0.0" />
     <InternalsVisibleTo Include="Pure.Collections.Generic.Tests" />
   </ItemGroup>
   <ItemGroup>
